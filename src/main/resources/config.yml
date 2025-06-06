@@ -1,0 +1,14 @@
+# The token for this bot
+bot-token: []
+
+# The server id
+server-id: []
+
+# The personal access token for GitHub API access
+github-token: []
+
+# The "support" roles
+support-roles: []
+
+# Do not touch this value :)
+version: 1
