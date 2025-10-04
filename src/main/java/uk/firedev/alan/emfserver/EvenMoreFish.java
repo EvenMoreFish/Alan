@@ -41,40 +41,38 @@ public class EvenMoreFish extends Server {
     @NotNull
     @Override
     public Consumer<CommandListUpdateAction> commandInit() {
-        return commands -> {
-            commands.addCommands(
-                Commands
-                    .slash("downloads", "Retrieve the download links").addOptions(getEmbedData()),
-                // /jenkins
-                Commands
-                    .slash("jenkins", "Retrieve the Jenkins link").addOptions(getEmbedData()),
-                // /wiki
-                Commands
-                    .slash("wiki", "Retrieves the Wiki link").addOptions(getEmbedData()),
-                // /pr
-                Commands
-                    .slash("pr", "Retrieve a Pull Request")
-                    .addOption(OptionType.INTEGER, "pr", "The Pull Request to retrieve", true)
-                    .addOptions(getEmbedData()),
-                // /issue
-                Commands
-                    .slash("issue", "Retrieve an Issue")
-                    .addOption(OptionType.INTEGER, "issue", "The Issue to retrieve", true)
-                    .addOptions(getEmbedData()),
-                // /suggestions
-                Commands
-                    .slash("suggestions", "View the suggestion tracker").addOptions(getEmbedData()),
-                // /bugs
-                Commands
-                    .slash("bugs", "View the bug tracker").addOptions(getEmbedData()),
-                // /featurerequest
-                Commands
-                    .slash("featurerequest", "Request a new feature"),
-                // /bugreport
-                Commands
-                    .slash("bugreport", "Report a bug")
-            );
-        };
+        return commands -> commands.addCommands(
+            Commands
+                .slash("downloads", "Retrieve the download links").addOptions(getEmbedData()),
+            // /jenkins
+            Commands
+                .slash("jenkins", "Retrieve the Jenkins link").addOptions(getEmbedData()),
+            // /wiki
+            Commands
+                .slash("wiki", "Retrieves the Wiki link").addOptions(getEmbedData()),
+            // /pr
+            Commands
+                .slash("pr", "Retrieve a Pull Request")
+                .addOption(OptionType.INTEGER, "pr", "The Pull Request to retrieve", true)
+                .addOptions(getEmbedData()),
+            // /issue
+            Commands
+                .slash("issue", "Retrieve an Issue")
+                .addOption(OptionType.INTEGER, "issue", "The Issue to retrieve", true)
+                .addOptions(getEmbedData()),
+            // /suggestions
+            Commands
+                .slash("suggestions", "View the suggestion tracker").addOptions(getEmbedData()),
+            // /bugs
+            Commands
+                .slash("bugs", "View the bug tracker").addOptions(getEmbedData()),
+            // /featurerequest
+            Commands
+                .slash("featurerequest", "Request a new feature"),
+            // /bugreport
+            Commands
+                .slash("bugreport", "Report a bug")
+        );
     }
 
     public @NotNull List<Role> getSupportRoles() {

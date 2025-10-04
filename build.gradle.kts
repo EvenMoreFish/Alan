@@ -5,6 +5,7 @@ plugins {
 
 group = "uk.firedev"
 version = "1.0-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_25
 
 repositories {
     mavenCentral()
