@@ -1,5 +1,9 @@
 package uk.firedev.alan.emfserver;
 
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.label.Label;
+import net.dv8tion.jda.api.components.textinput.TextInput;
+import net.dv8tion.jda.api.components.textinput.TextInputStyle;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -7,10 +11,7 @@ import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.text.TextInput;
-import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
-import net.dv8tion.jda.api.interactions.modals.Modal;
+import net.dv8tion.jda.api.modals.Modal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kohsuke.github.GHFileNotFoundException;
@@ -150,37 +151,37 @@ public class EMFListener extends ListenerAdapter {
     // GitHub Issue Creation
 
     private void bugReport(@NotNull SlashCommandInteractionEvent event) {
-        TextInput title = TextInput.create("title", "title", TextInputStyle.SHORT)
+        TextInput title = TextInput.create("title", TextInputStyle.SHORT)
             .setMinLength(1)
             .setRequired(true)
             .build();
 
-        TextInput bug = TextInput.create("bug", "bug", TextInputStyle.PARAGRAPH)
+        TextInput bug = TextInput.create("bug", TextInputStyle.PARAGRAPH)
             .setMinLength(1)
             .setRequired(true)
             .build();
 
         event.getInteraction().replyModal(
             Modal.create("bugreport", "Create a bug report")
-                .addComponents(ActionRow.of(title), ActionRow.of(bug))
+                .addComponents(Label.of("Title", title), Label.of("Bug", bug))
                 .build()
         ).queue();
     }
 
     private void featureRequest(@NotNull SlashCommandInteractionEvent event) {
-        TextInput title = TextInput.create("title", "title", TextInputStyle.SHORT)
+        TextInput title = TextInput.create("title", TextInputStyle.SHORT)
             .setMinLength(1)
             .setRequired(true)
             .build();
 
-        TextInput request = TextInput.create("request", "request", TextInputStyle.PARAGRAPH)
+        TextInput request = TextInput.create("request", TextInputStyle.PARAGRAPH)
             .setMinLength(1)
             .setRequired(true)
             .build();
 
         event.getInteraction().replyModal(
             Modal.create("featurerequest", "Create a feature request")
-                .addComponents(ActionRow.of(title), ActionRow.of(request))
+                .addComponents(Label.of("Title", title), Label.of("Request", request))
                 .build()
         ).queue();
     }
