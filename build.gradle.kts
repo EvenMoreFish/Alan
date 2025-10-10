@@ -16,7 +16,9 @@ dependencies {
     implementation(libs.jda) {
         exclude(module="opus-java")
     }
-    implementation(libs.github)
+    implementation(libs.github) {
+        exclude("com.infradna.tool", "*")
+    }
 }
 
 tasks {
@@ -34,9 +36,9 @@ tasks {
         archiveVersion.set("")
         archiveClassifier.set("")
 
-        minimize()
-
         // Libs Package
         relocate("dev.dejvokep.boostedyaml", "uk.firedev.alan.libs.boostedyaml")
+
+        minimize()
     }
 }
