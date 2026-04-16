@@ -1,16 +1,18 @@
-package uk.firedev.alan.emfserver;
+package uk.firedev.alan.discord;
 
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.kohsuke.github.GHRepository;
 import uk.firedev.alan.Config;
 import uk.firedev.alan.Main;
-import uk.firedev.alan.Server;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,28 +20,26 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 // The EMF Support Server
-public class EvenMoreFish extends Server {
+public class SupportServer {
 
-    private static final EvenMoreFish instance = new EvenMoreFish();
+    private static final SupportServer instance = new SupportServer();
+    protected Guild guild;
 
-    public static EvenMoreFish get() {
+    public static SupportServer get() {
         return instance;
     }
 
     @NotNull
-    @Override
     public String getId() {
         return Config.get().getServerId();
     }
 
     @NotNull
-    @Override
     public Consumer<JDABuilder> preInit() {
-        return jdaBuilder -> jdaBuilder.addEventListeners(new EMFListener());
+        return jdaBuilder -> jdaBuilder.addEventListeners(new SupportServerListener());
     }
 
     @NotNull
-    @Override
     public Consumer<CommandListUpdateAction> commandInit() {
         return commands -> commands.addCommands(
             Commands
@@ -94,4 +94,16 @@ public class EvenMoreFish extends Server {
         return new OptionData(OptionType.BOOLEAN, "embed", "Include the embed? (Default: false)", false);
     }
 
+    public void load(@NotNull JDA jda) {
+        this.guild = jda.getGuildById(getId());
+        if (this.guild == null) {
+            System.out.println("Could not load server " + getId());
+        } else {
+            System.out.println("Loaded server " + guild.getName());
+        }
+    }
+
+    public @Nullable Guild getGuild() {
+        return this.guild;
+    }
 }

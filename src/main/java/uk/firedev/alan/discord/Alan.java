@@ -1,22 +1,35 @@
-package uk.firedev.alan;
+package uk.firedev.alan.discord;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.jetbrains.annotations.NotNull;
+import uk.firedev.alan.Config;
+import uk.firedev.alan.Main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EnumSet;
 import java.util.logging.Level;
 
-public abstract class Bot {
+public class Alan {
 
-    protected final List<Server> servers = new ArrayList<>();
-
+    private static final Alan instance = new Alan();
+    private final SupportServer server = SupportServer.get();
     private JDA bot;
 
-    public Bot() {}
+    public static Alan get() {
+        return instance;
+    }
+
+    private Alan() {}
+
+    protected JDABuilder initializeBuilder() {
+        return JDABuilder.createLight(
+            Config.get().getBotToken(),
+            EnumSet.allOf(GatewayIntent.class)
+        );
+    }
 
     public void load() {
         JDABuilder builder = initializeBuilder();
@@ -32,8 +45,6 @@ public abstract class Bot {
         return bot;
     }
 
-    protected abstract JDABuilder initializeBuilder();
-
     private JDA buildBot(JDABuilder builder) {
         return builder.build();
     }
@@ -47,7 +58,7 @@ public abstract class Bot {
     }
 
     private void loadServers() {
-        servers.forEach(server -> server.load(this.bot));
+        server.load(this.bot);
     }
 
     private void updateCommands() {
@@ -57,11 +68,10 @@ public abstract class Bot {
     }
 
     private void preInit(@NotNull JDABuilder builder) {
-        servers.forEach(server -> server.preInit().accept(builder));
+        server.preInit().accept(builder);
     }
 
     private void loadCommands(@NotNull CommandListUpdateAction commands) {
-        servers.forEach(server -> server.commandInit().accept(commands));
+        server.commandInit().accept(commands);
     }
-
 }

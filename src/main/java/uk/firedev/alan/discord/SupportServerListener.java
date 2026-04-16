@@ -1,6 +1,5 @@
-package uk.firedev.alan.emfserver;
+package uk.firedev.alan.discord;
 
-import net.dv8tion.jda.api.components.actionrow.ActionRow;
 import net.dv8tion.jda.api.components.label.Label;
 import net.dv8tion.jda.api.components.textinput.TextInput;
 import net.dv8tion.jda.api.components.textinput.TextInputStyle;
@@ -23,12 +22,12 @@ import uk.firedev.alan.Main;
 import java.io.IOException;
 import java.util.List;
 
-public class EMFListener extends ListenerAdapter {
+public class SupportServerListener extends ListenerAdapter {
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
-        if (guild == null || !guild.equals(EvenMoreFish.get().getGuild())) {
+        if (guild == null || !guild.equals(SupportServer.get().getGuild())) {
             return;
         }
         switch (event.getName()) {
@@ -48,16 +47,11 @@ public class EMFListener extends ListenerAdapter {
         if (member == null) {
             return false;
         }
-        List<Role> roles = EvenMoreFish.get().getSupportRoles();
+        List<Role> roles = SupportServer.get().getSupportRoles();
         if (roles.isEmpty()) {
             return false;
         }
-        for (Role role : member.getRoles()) {
-            if (roles.contains(role)) {
-                return true;
-            }
-        }
-        return false;
+        return member.getRoles().stream().anyMatch(roles::contains);
     }
 
     private void showDownloads(@NotNull SlashCommandInteractionEvent event) {
@@ -100,7 +94,7 @@ public class EMFListener extends ListenerAdapter {
         int prId = option.getAsInt();
         GHPullRequest pullRequest;
         try {
-            pullRequest = EvenMoreFish.get().getEMFRepository().getPullRequest(prId);
+            pullRequest = SupportServer.get().getEMFRepository().getPullRequest(prId);
         } catch (GHFileNotFoundException exception) {
             sendMessage(event, "Pull Request #" + prId + " not found.", true);
             return;
@@ -124,7 +118,7 @@ public class EMFListener extends ListenerAdapter {
         int issueId = option.getAsInt();
         GHIssue issue;
         try {
-            issue = EvenMoreFish.get().getEMFRepository().getIssue(issueId);
+            issue = SupportServer.get().getEMFRepository().getIssue(issueId);
         } catch (GHFileNotFoundException exception) {
             sendMessage(event, "Issue #" + issueId + " not found.", true);
             return;
@@ -189,7 +183,7 @@ public class EMFListener extends ListenerAdapter {
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
         Guild guild = event.getGuild();
-        if (guild == null || !guild.equals(EvenMoreFish.get().getGuild())) {
+        if (guild == null || !guild.equals(SupportServer.get().getGuild())) {
             return;
         }
         switch (event.getModalId()) {

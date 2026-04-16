@@ -2,7 +2,7 @@ package uk.firedev.alan;
 
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
-import uk.firedev.alan.emfserver.Alan;
+import uk.firedev.alan.discord.Alan;
 
 import java.io.IOException;
 import java.util.logging.Logger;
