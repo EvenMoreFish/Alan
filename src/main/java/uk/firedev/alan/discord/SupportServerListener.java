@@ -1,26 +1,35 @@
 package uk.firedev.alan.discord;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.components.Component;
+import net.dv8tion.jda.api.components.container.Container;
 import net.dv8tion.jda.api.components.label.Label;
+import net.dv8tion.jda.api.components.textdisplay.TextDisplay;
 import net.dv8tion.jda.api.components.textinput.TextInput;
 import net.dv8tion.jda.api.components.textinput.TextInputStyle;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.modals.Modal;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHRepository;
+import org.w3c.dom.Text;
 import uk.firedev.alan.Main;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class SupportServerListener extends ListenerAdapter {
 
@@ -40,6 +49,7 @@ public class SupportServerListener extends ListenerAdapter {
             case "bugs" -> showBugs(event);
             case "bugreport" -> bugReport(event);
             case "featurerequest" -> featureRequest(event);
+            case "release" -> ReleaseCommand.release(event);
         }
     }
 

@@ -71,7 +71,9 @@ public class SupportServer {
                 .slash("featurerequest", "Request a new feature"),
             // /bugreport
             Commands
-                .slash("bugreport", "Report a bug")
+                .slash("bugreport", "Report a bug"),
+            // /release
+            ReleaseCommand.get()
         );
     }
 

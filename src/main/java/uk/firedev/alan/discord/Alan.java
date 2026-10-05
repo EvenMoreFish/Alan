@@ -2,6 +2,7 @@ package uk.firedev.alan.discord;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -10,6 +11,7 @@ import uk.firedev.alan.Config;
 import uk.firedev.alan.Main;
 
 import java.util.EnumSet;
+import java.util.Optional;
 import java.util.logging.Level;
 
 public class Alan {
@@ -74,4 +76,11 @@ public class Alan {
     private void loadCommands(@NotNull CommandListUpdateAction commands) {
         server.commandInit().accept(commands);
     }
+
+    public @NotNull TextChannel getUpdatesChannel() {
+        return Optional.ofNullable(server.getGuild())
+            .map(guild -> guild.getTextChannelById(1359231115218387275L))
+            .orElseThrow();
+    }
+
 }
