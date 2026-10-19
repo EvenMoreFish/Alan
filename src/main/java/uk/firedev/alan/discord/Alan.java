@@ -3,6 +3,7 @@ package uk.firedev.alan.discord;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -77,9 +78,10 @@ public class Alan {
         server.commandInit().accept(commands);
     }
 
-    public @NotNull TextChannel getUpdatesChannel() {
+    public @NotNull StandardGuildMessageChannel getUpdatesChannel() {
+        long id = Config.get().getReleaseChannelId();
         return Optional.ofNullable(server.getGuild())
-            .map(guild -> guild.getTextChannelById(1359231115218387275L))
+            .map(guild -> guild.getChannelById(StandardGuildMessageChannel.class, id))
             .orElseThrow();
     }
 

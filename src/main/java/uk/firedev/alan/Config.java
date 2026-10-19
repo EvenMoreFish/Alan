@@ -60,6 +60,10 @@ public class Config {
         return this.document.getString("server-id");
     }
 
+    public long getReleaseChannelId() {
+        return this.document.getOptionalLong("release-channel-id").orElseThrow();
+    }
+
     public String getGitHubToken() {
         return this.document.getString("github-token");
     }

@@ -4,6 +4,9 @@ bot-token: []
 # The server id
 server-id: []
 
+# The channel to post releases in
+release-channel-id: []
+
 # The personal access token for GitHub API access
 github-token: []
 
@@ -11,4 +14,4 @@ github-token: []
 support-roles: []
 
 # Do not touch this value :)
-version: 1
+version: 2
